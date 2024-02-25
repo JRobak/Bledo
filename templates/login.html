@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html, body {
+            background-color: #212b28;
+            margin: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #login_box {
+            background-color: #585f74;
+            padding: 40px 80px;
+            text-align: center;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-radius: 40px;
+            font-size: 25px;
+            border: #000000 solid 3px;
+            box-shadow: 10px 10px 2px #454a5a;
+        }
+        #login_box input {
+            background-color: #464b5c;
+            border: #000 solid 2px;
+            box-shadow: 2px 2px 4px #353944;
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: 24px;
+            text-shadow: #676d84 1px 1px 2px;
+            color: #8b92ac;
+        }
+        #login_box button {
+            background-color: #555b6e;
+            border: #000 solid 2px;
+            box-shadow: 2px 2px 4px #353944;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 20px;
+            color: rgb(28, 59, 77);
+            font-weight: 700;
+            text-shadow: #717a95 1px 1px 2px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="login_box">
+        <form action="/main" method="post">
+            <input name="username" placeholder="nazwa użytkownika"><br>
+            <button type="submit">ZALOGUJ SIĘ!</button>
+        </form>
+    </div>
+</body>
+</html>
