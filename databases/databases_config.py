@@ -1,25 +1,23 @@
 import sqlite3
+from flask import g
 
-
-connect = sqlite3.connect(('databases/bledo_databases.db'))
-cursor = connect.cursor()
 
 def check_exists(name):
     query = f"SELECT name FROM users WHERE name = ?"
-    cursor.execute(query, (name,))
-    return cursor.fetchone() is not None
+    g.cursor.execute(query, (name,))
+    return g.cursor.fetchone() is not None
+
 
 def add_data(name):
-    cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
-    connect.commit()
+    g.cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
+    g.db.commit()
+
 
 def get_user_id(name):
     query = f"SELECT id FROM users WHERE name = ?"
-    cursor.execute(query, (name,))
-    return cursor.fetchone()
+    g.cursor.execute(query, (name,))
+    return g.cursor.fetchone()
 
-def close_connect():
-    pass
 
 # class Database_User:
 #     def __init__(self, path):
