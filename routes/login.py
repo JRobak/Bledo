@@ -34,4 +34,5 @@ def login():
 def logout():
     response = make_response(redirect(url_for('login.login')))
     response.delete_cookie('user_id')
+    response.delete_cookie('user_name')
     return response
