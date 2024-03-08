@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, make_response
-from databases.databases_config import check_exists, add_data, get_user_id
+from databases.database_user import check_exists, add_data, get_user_id
 
 login_ = Blueprint('login', __name__)
 
