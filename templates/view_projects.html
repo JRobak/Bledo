@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <p>Wszystkie projekty:</p>
+    {% for project in projects_list %}
+        - <a href="/project/{{ project[0] }}/">{{ project[0] }}</a> <br>
+    {% endfor %}
+    <form action="/add_new_project/" method="post">
+        <input type="text" name="new_project_name" placeholder="Wpisz nazwe">
+        <input type="submit" value="Dodaj projekt">
+    </form>
+{% endblock %}
