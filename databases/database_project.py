@@ -13,6 +13,13 @@ def check_exists(name, user_id):
     return g.cursor.fetchone() is not None
 
 
+def get_user_thumbnail(user_id):
+    query = f"SELECT thumbnail FROM users WHERE id = ?"
+    g.cursor.execute(query, (user_id, ))
+    result = g.cursor.fetchone()[0]
+    return result
+
+
 def return_user_tables(user_id):
     query = f"SELECT name FROM projects WHERE id_user = ?"
     g.cursor.execute(query, (user_id,))
