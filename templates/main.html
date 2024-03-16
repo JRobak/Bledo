@@ -4,55 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <style>
-        /*
-        #2b4a3e - bg
-        #4d5366 - bg content
-        */
+        /*@import "../static/css/variables.css";*/
 
+        /* General */
         html, body {
-            background-color: #212b28;
+            background-color: var(--bg-color);
             margin: 0;
             height: 100%;
             overflow: hidden;
+            font-family: Arial, sans-serif;
         }
 
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: #26342f;
+            background: var(--scrollbar-track);
         }
         ::-webkit-scrollbar-thumb {
-            background: #415951;
+            background: var(--scrollbar-thumb);
         }
+
+        /* Links */
         a {
             text-decoration: none;
             color: #000;
         }
 
+        /* Container */
         #container {
             display: flex;
             height: 100%;
         }
+
+        /* Sidebar */
         #bar, #content {
-            background-color: #4d5366;
-            margin: 0.8%;
+            background-color: var(--bg-content);
+            margin: 1%;
             border-radius: 20px;
-            padding: 0.1% 1%;
+            padding: 1%;
             overflow: auto;
-            font-size: 30px;
+            font-size: 20px;
             border: #000 solid 3px;
         }
         #bar {
-            width:13%;
+            width: 13%;
         }
+
+        /* Content */
         #content {
             flex: 1;
             margin-left: 0;
         }
+
+        /* Username Box */
         #circle_username {
-            background-color: #2b4a3e;
+            background-color: var(--circle-username-bg);
             height: 70px;
             width: 70px;
             border-radius: 50%;
@@ -66,15 +76,30 @@
             align-items: center;
             margin: 10px 0;
         }
-    </style>
     {% block css %}{% endblock %}
+    </style>
 </head>
 <body>
     <div id="container">
         <div id="bar">
-            <a href="/account/"> <div> <div id="username_box"> <div id="circle_username"></div> {{ g.username }}</div> </div></a>
+            <a href="/account/">
+                <div>
+                    <div id="username_box">
+                        <div id="circle_username">
+                            {% if g.user_image %}
+                                <img src="{{ url_for('static', filename='image/' + g.user_image) }}" style="height: 70px; width: 70px; border-radius: 50%;">
+                            {% endif %}
+                        </div>
+                        {{ g.username }}
+                    </div>
+                </div>
+            </a>
             <hr color="#212b28">
-            <a href="/projects/"> <div> <div> Wyswietl projekty</div> </div></a>
+            <a href="/projects/">
+                <div>
+                    <div>Wyswietl projekty</div>
+                </div>
+            </a>
         </div>
         <div id="content">
             {% block content %}{% endblock %}

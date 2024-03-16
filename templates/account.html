@@ -3,10 +3,73 @@
 {% block title %} {{title}} {% endblock %}
 
 {% block css %}
+    /* Form */
+    form {
+        border: 2px solid black;
+        padding: 20px;
+        margin-bottom: 20px;
+        max-width: 400px;
+        width: 100%;
+    }
+    input[type="file"] {
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    button[type="submit"]:hover {
+        background-color: var(--button-hover-bg);
+    }
+    button[type="submit"]:focus {
+        outline: none;
+    }
+
+    /* Logout Button */
+    #logout-btn {
+        background-color: var(--logout-button-bg);
+        color: var(--logout-button-text);
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    #logout-btn:hover {
+        background-color: var(--logout-button-hover-bg);
+    }
+    #logout-btn:focus {
+        outline: none;
+    }
+    h2 {
+        color: var(--header-color);
+        text-shadow: var(--header-text-shadow);
+        margin-bottom: 20px;
+        text-align: center;
+    }
 {% endblock %}
 
 {% block content %}
-    <p>Informacje o koncie</p>
-    <input type="file"><br>
-    <a href="/logout/"><button>Wyloguj sie!</button></a>
+    <h2>Informacje o koncie</h2>
+
+    <form action="/change_image/" method="post" enctype="multipart/form-data">
+        <center style="color:white;">Zmień zdjęcie profilowe<br>70px x 70px</center><br>
+        <input type="file" name="image_file" style="margin-bottom: 10px;">
+        <br>
+        {% if error %}
+            <div style="color:#bebebe">¡ {{ error }} !</div>
+        {% endif %}
+        <br>
+        <button type="submit">ZMIEN ZDJECIE!</button>
+    </form>
+
+    <a href="/logout/" id="logout-btn" style="position: absolute; bottom: 34px; right: 44px;">Wyloguj się!</a>
 {% endblock %}

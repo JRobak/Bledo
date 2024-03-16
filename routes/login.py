@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, make_response
-from databases.database_user import check_exists, add_data, get_user_id
+from databases.database_config import check_exists_user, add_data, get_user_id
 
 login_ = Blueprint('login', __name__)
 
@@ -18,10 +18,10 @@ def login():
         if not username:
             return render_template('login.html', title=title, error="Nazwa nie może byc pusta")
 
-        if not check_exists(username):
+        if not check_exists_user(username):
             add_data(username)
 
-        db_user_id = str(get_user_id(username))[1:-2]  # zwraca (1,) dlatego ustawione na [1:-2]
+        db_user_id = str(get_user_id(username))[1:-2]  # zwraca '(1,)' dlatego ustawione na [1:-2]
         response = make_response(redirect(url_for('account.account')))
         response.set_cookie('user_id', db_user_id)
         response.set_cookie('user_name', username)

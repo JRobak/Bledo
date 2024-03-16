@@ -1,0 +1,16 @@
+:root {
+    --bg-color: #212b28;
+    --bg-content: #4d5366;
+    --circle-username-bg: #2b4a3e;
+    --scrollbar-track: #26342f;
+    --scrollbar-thumb: #415951;
+    --button-bg: #2b4a3e;
+    --button-hover-bg: #3f684d;
+    --button-text: #fff;
+    --logout-button-bg: #d9534f;
+    --logout-button-hover-bg: #c9302c;
+    --logout-button-text: #fff;
+    --header-color: #ffffff;
+    --header-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
