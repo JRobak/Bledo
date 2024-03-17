@@ -10,8 +10,8 @@ def before_request():
     g.username = request.cookies.get('user_name')
     g.db = sqlite3.connect('../databases/bledo_databases.db')
     g.cursor = g.db.cursor()
-    from databases.database_config import get_image_path, get_user_id
-    g.user_image = str(get_image_path(g.username))[2:-3]
+    from databases.database_config import get_image_path
+    g.user_image = get_image_path(g.username)
 
 
 @app.after_request

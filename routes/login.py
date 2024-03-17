@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, make_response
-from databases.database_config import check_exists_user, add_data, get_user_id, check_expiration_date, check_exists_number_session, create_new_session, return_session_number, delete_session
+from databases.database_config import check_exists_user, add_data, get_user_id, check_expiration_date, check_exists_number_session, create_new_session, return_session_number, delete_session, extend_date_of_session
 
 login_ = Blueprint('login', __name__)
 
@@ -11,6 +11,7 @@ def login():
     nr_session = request.cookies.get('session')
     if nr_session and check_exists_number_session(nr_session):
         if check_expiration_date(nr_session):
+            extend_date_of_session(nr_session)
             return redirect(url_for('account.account'))
         else:
             delete_session(nr_session)
@@ -28,9 +29,9 @@ def login():
         if not check_exists_user(username):
             add_data(username)
 
-        db_user_id = str(get_user_id(username))[1:-2]
+        db_user_id = get_user_id(username)
 
-        nr_session = str(return_session_number(db_user_id))[2:-3]
+        nr_session = return_session_number(db_user_id)
         if nr_session and check_exists_number_session(nr_session):
             if check_expiration_date(nr_session):
                 response = make_response(redirect(url_for('account.account')))
@@ -41,7 +42,7 @@ def login():
                 delete_session(nr_session)
 
         create_new_session(db_user_id)
-        session_number = str(return_session_number(db_user_id))[2:-3]
+        session_number = return_session_number(db_user_id)
         response = make_response(redirect(url_for('account.account')))
         response.set_cookie('session', session_number)
         response.set_cookie('user_name', username)

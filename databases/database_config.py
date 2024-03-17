@@ -19,7 +19,7 @@ def add_data(name):
 def get_user_id(name):
     query = f"SELECT id FROM users WHERE name = ?"
     g.cursor.execute(query, (name,))
-    return g.cursor.fetchone()
+    return str(g.cursor.fetchone())[1:-2]
 
 
 # projects
@@ -49,7 +49,7 @@ def change_image_user(user_id, path_to_image):
 def get_image_path(user_name):
     query = f"SELECT img_path FROM users WHERE name = ?"
     g.cursor.execute(query, (user_name,))
-    return g.cursor.fetchone()
+    return str(g.cursor.fetchone())[2:-3]
 
 
 # sessions
@@ -62,13 +62,13 @@ def check_exists_number_session(nr):
 def return_session_number(user_id):
     query = f"SELECT session_number FROM sessions WHERE id_user = ?"
     g.cursor.execute(query, (user_id,))
-    return g.cursor.fetchone()
+    return str(g.cursor.fetchone())[2:-3]
 
 
 def return_user(nr_session):
     query = f"SELECT id_user FROM sessions WHERE session_number = ?"
     g.cursor.execute(query, (nr_session,))
-    return g.cursor.fetchone()
+    return str(g.cursor.fetchone())[1:-2]
 
 
 def create_new_session(user_id):
@@ -91,6 +91,12 @@ def check_expiration_date(nr):
     expiration_date = datetime.strptime(date_str, "%d-%m-%Y")
     current_datetime = datetime.now()
     return (expiration_date - current_datetime).days >= 0
+
+
+def extend_date_of_session(nr):
+    expiration_date = (datetime.now() + timedelta(days=4)).strftime("%d-%m-%Y")
+    g.cursor.execute("UPDATE sessions SET expiration_date = ? WHERE session_number = ?", (expiration_date, nr))
+    g.db.commit()
 
 
 def delete_session(nr):

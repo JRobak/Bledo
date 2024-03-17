@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, redirect, url_for, make_response
 import os
-from databases.database_config import change_image_user, check_expiration_date, check_exists_number_session, delete_session, return_user
+from databases.database_config import change_image_user, check_expiration_date, check_exists_number_session, delete_session, return_user, extend_date_of_session
 
 account_ = Blueprint('account', __name__)
 
@@ -13,6 +13,7 @@ def account():
     nr_session = request.cookies.get('session')
     if nr_session and check_exists_number_session(nr_session):
         if check_expiration_date(nr_session):
+            extend_date_of_session(nr_session)
             return render_template('account.html', title=title, error=error)
         else:
             delete_session(nr_session)
@@ -55,7 +56,7 @@ def change_image():
             return redirect(url_for('account.account', error="Blad przy zapisie pliku, sprobuj ponownie"))
 
         session = request.cookies.get('session')
-        user_id = str(return_user(session))[1:-2]
+        user_id = return_user(session)
         change_image_user(user_id, new_filename)
         return redirect(url_for('account.account'))
 
