@@ -1,6 +1,6 @@
-from flask import render_template, Blueprint, request, redirect, url_for
+from flask import render_template, Blueprint, request, redirect, url_for, make_response
 import os
-from databases.database_config import change_image_user
+from databases.database_config import change_image_user, check_expiration_date, check_exists_number_session, delete_session, return_user
 
 account_ = Blueprint('account', __name__)
 
@@ -10,16 +10,21 @@ def account():
     title = 'Ustawienia konta'
     error = request.args.get('error')
 
-    user_id = request.cookies.get('user_id')
-    if user_id:
-        return render_template('account.html', title=title, error=error)
+    nr_session = request.cookies.get('session')
+    if nr_session and check_exists_number_session(nr_session):
+        if check_expiration_date(nr_session):
+            return render_template('account.html', title=title, error=error)
+        else:
+            delete_session(nr_session)
 
-    return redirect(url_for('login.login'))
+    response = make_response(redirect(url_for('login.login')))
+    response.delete_cookie('session')
+    response.delete_cookie('user_name')
+    return response
 
 
 @account_.route('/change_image/', methods=["POST"])
 def change_image():
-    title = 'Ustawienia konta'
 
     if request.method == "POST":
         if 'image_file' not in request.files:
@@ -49,7 +54,9 @@ def change_image():
         except Exception as e:
             return redirect(url_for('account.account', error="Blad przy zapisie pliku, sprobuj ponownie"))
 
-        change_image_user(request.cookies.get('user_id'), new_filename)
+        session = request.cookies.get('session')
+        user_id = str(return_user(session))[1:-2]
+        change_image_user(user_id, new_filename)
         return redirect(url_for('account.account'))
 
     return redirect(url_for('account.account', error="Cos poszlo nie tak"))
