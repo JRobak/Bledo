@@ -22,6 +22,12 @@ def get_user_id(name):
     return str(g.cursor.fetchone())[1:-2]
 
 
+def get_user_name(id):
+    query = f"SELECT name FROM users WHERE id = ?"
+    g.cursor.execute(query, (id,))
+    return str(g.cursor.fetchone())[2:-3]
+
+
 # projects
 def add_new_project(name, user_id):
     g.cursor.execute("INSERT INTO projects (name, id_user) VALUES (?, ?)", (name, user_id))

@@ -23,7 +23,6 @@ def login():
         if not username:
             response = make_response(render_template('login.html', title=title, error="Nazwa nie może byc pusta"))
             response.delete_cookie('session')
-            response.delete_cookie('user_name')
             return response
 
         if not check_exists_user(username):
@@ -36,7 +35,6 @@ def login():
             if check_expiration_date(nr_session):
                 response = make_response(redirect(url_for('account.account')))
                 response.set_cookie('session', nr_session)
-                response.set_cookie('user_name', username)
                 return response
             else:
                 delete_session(nr_session)
@@ -45,12 +43,10 @@ def login():
         session_number = return_session_number(db_user_id)
         response = make_response(redirect(url_for('account.account')))
         response.set_cookie('session', session_number)
-        response.set_cookie('user_name', username)
         return response
 
     response = make_response(render_template('login.html', title=title))
     response.delete_cookie('session')
-    response.delete_cookie('user_name')
     return response
 
 
@@ -60,5 +56,4 @@ def logout():
 
     response = make_response(redirect(url_for('login.login')))
     response.delete_cookie('session')
-    response.delete_cookie('user_name')
     return response

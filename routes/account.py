@@ -20,7 +20,6 @@ def account():
 
     response = make_response(redirect(url_for('login.login')))
     response.delete_cookie('session')
-    response.delete_cookie('user_name')
     return response
 
 
