@@ -1,7 +1,11 @@
+import os
 import sqlite3
 from datetime import datetime, timedelta
 
 from flask import g
+
+
+DATABASE_LOCATION = r'Z:\CODE\Bledo\databases\bledo_databases.db'
 
 
 # users
@@ -88,6 +92,7 @@ def create_new_session(user_id):
 
     g.cursor.execute("INSERT INTO sessions (id_user, session_number, date_of_creation, expiration_date) VALUES (?, ?, ?, ?)", (user_id, new_session_number, date_of_creation, expiration_date))
     g.db.commit()
+    return new_session_number
 
 
 def check_expiration_date(nr):
@@ -109,6 +114,15 @@ def delete_session(nr):
     query = "DELETE FROM sessions WHERE session_number = ?"
     g.cursor.execute(query, (nr,))
     g.db.commit()
+
+
+def create_database():
+    os.makedirs(os.path.dirname(DATABASE_LOCATION), exist_ok=True)
+    db = sqlite3.connect(DATABASE_LOCATION)
+    cursor = db.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY, id_user INTEGER, FOREIGN KEY(id_user) REFERENCES users(id))''')
+
+    # create rest of tables.
 
 # db = sqlite3.connect('bledo_databases.db')
 # cursor = db.cursor()

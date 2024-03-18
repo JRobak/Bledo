@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, request, redirect, url_for, make_response
 import os
 from databases.database_config import change_image_user, check_expiration_date, check_exists_number_session, delete_session, return_user, extend_date_of_session
+from lib.session import get_session_number
 
 account_ = Blueprint('account', __name__)
 
@@ -10,17 +11,13 @@ def account():
     title = 'Ustawienia konta'
     error = request.args.get('error')
 
-    nr_session = request.cookies.get('session')
-    if nr_session and check_exists_number_session(nr_session):
-        if check_expiration_date(nr_session):
-            extend_date_of_session(nr_session)
-            return render_template('account.html', title=title, error=error)
-        else:
-            delete_session(nr_session)
+    nr_session = get_session_number()
+    if nr_session is None:
+        response = make_response(redirect(url_for('login.login')))
+        response.delete_cookie('session')
+        return response
 
-    response = make_response(redirect(url_for('login.login')))
-    response.delete_cookie('session')
-    return response
+    return render_template('account.html', title=title, error=error)
 
 
 @account_.route('/change_image/', methods=["POST"])
