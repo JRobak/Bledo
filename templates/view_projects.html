@@ -1,17 +1,64 @@
 {% extends 'main.html' %}
 
-{% block title %} {{title}} {% endblock %}
+{% block title %}
+    {{ title }}
+{% endblock %}
 
 {% block css %}
+    <style>
+        h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: var(--project-text-header);
+            text-shadow: var(--project-text-shadow-header) 2px 2px 2px;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-    <p>Wszystkie projekty:</p>
-    {% for project in projects_list %}
-        - <a href="/project/{{ project[0] }}/">{{ project[0] }}</a> <br>
-    {% endfor %}
+    <h2>Wszystkie projekty:</h2>
+    <ul>
+        {% for project in projects_list %}
+            <li>
+                <a href="/project/{{ project[0] }}/" class="project-link">{{ project[0] }}</a>
+            </li>
+        {% endfor %}
+    </ul>
     <form action="/add_new_project/" method="post">
-        <input type="text" name="new_project_name" placeholder="Wpisz nazwe">
+        <input type="text" name="new_project_name" placeholder="Wpisz nazwę projektu">
         <input type="submit" value="Dodaj projekt">
     </form>
 {% endblock %}

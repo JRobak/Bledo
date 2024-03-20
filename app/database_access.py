@@ -1,6 +1,4 @@
-import sqlite3
 from datetime import datetime, timedelta
-
 from flask import g
 
 
@@ -89,6 +87,8 @@ def create_new_session(user_id):
     g.cursor.execute("INSERT INTO sessions (id_user, session_number, date_of_creation, expiration_date) VALUES (?, ?, ?, ?)", (user_id, new_session_number, date_of_creation, expiration_date))
     g.db.commit()
 
+    return new_session_number
+
 
 def check_expiration_date(nr):
     query = f"SELECT expiration_date FROM sessions WHERE session_number = ?"
@@ -109,21 +109,3 @@ def delete_session(nr):
     query = "DELETE FROM sessions WHERE session_number = ?"
     g.cursor.execute(query, (nr,))
     g.db.commit()
-
-# db = sqlite3.connect('bledo_databases.db')
-# cursor = db.cursor()
-#
-# cursor.execute('''CREATE TABLE IF NOT EXISTS sessions (id INTEGER PRIMARY KEY, id_user INTEGER, FOREIGN KEY(id_user) REFERENCES users(id))''')
-#
-# cursor.execute("INSERT INTO projects (name, id_user) VALUES ('p9', 1)")
-# cursor.execute("INSERT INTO projects (name, id_user) VALUES ('p0', 1)")
-# cursor.execute("INSERT INTO sessions (id_user) VALUES (1)")
-# db.commit()
-#
-# # cursor.execute("SELECT projects.name, users.name FROM projects INNER JOIN users ON projects.id_user = users.id")
-# #
-# # rows = cursor.fetchall()
-# # for row in rows:
-# #     print(row)
-#
-# db.close()
