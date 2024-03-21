@@ -1,14 +1,27 @@
 {
 	"folders": {},
 	"connections": {
-		"sqlite_jdbc-18e5bd51fdd-5beffb3d2a811161": {
+		"sqlite_jdbc-18e5ca79426-21ab9b296eabc63e": {
 			"provider": "sqlite",
 			"driver": "sqlite_jdbc",
 			"name": "bledo_databases.db",
 			"save-password": true,
 			"configuration": {
-				"database": "R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\database\\bledo_databases.db",
-				"url": "jdbc:sqlite:R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\database\\bledo_databases.db",
+				"database": "R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
+				"url": "jdbc:sqlite:R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		},
+		"sqlite_jdbc-18e5dcd1e6b-66ee6b2429847d20": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "bledo_databases.db 2",
+			"save-password": true,
+			"configuration": {
+				"database": "R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
+				"url": "jdbc:sqlite:R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
 				"configurationType": "MANUAL",
 				"type": "dev",
 				"auth-model": "native"

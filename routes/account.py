@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, redirect, url_for
 import os
-from app.database_access import change_image_user, return_user
+from app.database_access import change_image_user, get_user_id_by_nr_session
 from lib.session import get_session_number
 
 account_ = Blueprint('account', __name__)
@@ -14,18 +14,6 @@ def account():
     nr_session = get_session_number()
 
     return render_template('account.html', title=title, error=error)
-
-    # nr_session = request.cookies.get('session')
-    # if nr_session and check_exists_number_session(nr_session):
-    #     if check_expiration_date(nr_session):
-    #         extend_date_of_session(nr_session)
-    #         return render_template('account.html', title=title, error=error)
-    #     else:
-    #         delete_session(nr_session)
-
-    # response = make_response(redirect(url_for('login.login')))
-    # response.delete_cookie('session')
-    # return response
 
 
 @account_.route('/change_image/', methods=["POST"])
@@ -60,12 +48,10 @@ def change_image():
             return redirect(url_for('account.account', error="Blad przy zapisie pliku, sprobuj ponownie"))
 
         session = request.cookies.get('session')
-        user_id = return_user(session)
+        user_id = get_user_id_by_nr_session(session)
         change_image_user(user_id, new_filename)
         return redirect(url_for('account.account'))
 
     return redirect(url_for('account.account', error="Cos poszlo nie tak"))
-
-
 
 

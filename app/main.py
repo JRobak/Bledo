@@ -1,22 +1,22 @@
 from app import create_app
 from flask import g, request
 import sqlite3
-from app.database_config import create_database_file, create_tables
+from app.database_config import create_database_file, create_tables, db_path
 
 app = create_app()
 
 
 @app.before_request
 def before_request():
-    g.db = sqlite3.connect('../databases/bledo_databases.db')
+    g.db = sqlite3.connect(db_path)
     g.cursor = g.db.cursor()
 
     session = request.cookies.get('session')
     if session:
-        from app.database_access import get_image_path, return_user, get_user_name
-        g.user_id = return_user(session)
-        g.username = get_user_name(g.user_id)
-        g.user_image = get_image_path(g.username)
+        from app.database_access import get_image_path_by_user_name, get_user_id_by_nr_session, get_user_name_by_id
+        g.user_id = get_user_id_by_nr_session(session)
+        g.username = get_user_name_by_id(g.user_id)
+        g.user_image = get_image_path_by_user_name(g.username)
 
 
 @app.after_request

@@ -9,18 +9,18 @@ def check_exists_user(name):
     return g.cursor.fetchone() is not None
 
 
-def add_data(name):
+def add_new_user(name):
     g.cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
     g.db.commit()
 
 
-def get_user_id(name):
+def get_user_id_by_name(name):
     query = f"SELECT id FROM users WHERE name = ?"
     g.cursor.execute(query, (name,))
     return str(g.cursor.fetchone())[1:-2]
 
 
-def get_user_name(id):
+def get_user_name_by_id(id):
     query = f"SELECT name FROM users WHERE id = ?"
     g.cursor.execute(query, (id,))
     return str(g.cursor.fetchone())[2:-3]
@@ -38,7 +38,7 @@ def check_exists_project(name, user_id):
     return g.cursor.fetchone() is not None
 
 
-def return_user_tables(user_id):
+def get_user_tables_by_user_id(user_id):
     query = f"SELECT name FROM projects WHERE id_user = ?"
     g.cursor.execute(query, (user_id,))
     return g.cursor.fetchall()
@@ -50,7 +50,7 @@ def change_image_user(user_id, path_to_image):
     g.db.commit()
 
 
-def get_image_path(user_name):
+def get_image_path_by_user_name(user_name):
     query = f"SELECT img_path FROM users WHERE name = ?"
     g.cursor.execute(query, (user_name,))
     return str(g.cursor.fetchone())[2:-3]
@@ -63,13 +63,13 @@ def check_exists_number_session(nr):
     return g.cursor.fetchone() is not None
 
 
-def return_session_number(user_id):
+def get_session_number_by_user_id(user_id):
     query = f"SELECT session_number FROM sessions WHERE id_user = ?"
     g.cursor.execute(query, (user_id,))
     return str(g.cursor.fetchone())[2:-3]
 
 
-def return_user(nr_session):
+def get_user_id_by_nr_session(nr_session):
     query = f"SELECT id_user FROM sessions WHERE session_number = ?"
     g.cursor.execute(query, (nr_session,))
     return str(g.cursor.fetchone())[1:-2]
