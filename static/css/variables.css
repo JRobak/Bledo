@@ -2,17 +2,26 @@
     --bg-color: #212b28;
     --bg-content: #4d5366;
     --circle-username-bg: #2b4a3e;
-    --scrollbar-track: #26342f;
-    --scrollbar-thumb: #415951;
+    --scrollbar-track: #4d5366;
+    --scrollbar-thumb: #3e4257;
     --button-bg: #2b4a3e;
     --button-hover-bg: #3f684d;
-    --button-text: #fff;
+    --button-text: #d0decb;
     --logout-button-bg: #d9534f;
     --logout-button-hover-bg: #c9302c;
     --logout-button-text: #fff;
+
     --header-color: #ffffff;
     --header-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     --project-text-header: #90adbe;
     --project-text-shadow-header: #374648;
-}
+    --side-link-text-shadow: #c6e1bc;
+    --side-link-bg-hover: #45605b; /*#cc8b00 2b4a3e 4d5679*/
+    --side-link-bg-hover-border: #212b28;
+    --bg-tasks-color: #747c98;
+    --bg-tasks-shadow-color: #719895;
+    --task-box-color: #6a7085; /*FFA500 */
+    --title-border-color: #6e748c;
 
+    --bg-floating-box: rgba(85, 101, 91, 0.55);
+}

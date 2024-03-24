@@ -3,9 +3,136 @@
 {% block title %} {{title}} {% endblock %}
 
 {% block css %}
+<style>
+    #contener-top {
+        display: flex;
+        justify-content: space-between;
+        font-size: larger;
+    }
+    .floating-box {
+        background-color: var(--bg-floating-box);
+        padding: 1vh 2.2vh;
+        border-radius: 20px;
+        border: black solid 2px;
+    }
+    #contener-bottom {
+        display: grid;
+        margin-top: 2vh;
+        grid-template-rows: repeat(5, 1fr);
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2vh;
+        flex-grow: 1;
+    }
+    #content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #item-0 {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: 5;
+        grid-column-end: 3;
+
+    }
+    #item-1 {
+        grid-row-start: 1;
+        grid-column-start: 3;
+        grid-row-end: 4;
+        grid-column-end: 5;
+
+    }
+    #item-2 {
+        grid-row-start: 1;
+        grid-column-start: 5;
+        grid-row-end: 4;
+        grid-column-end: 8;
+        position: relative;
+    }
+    #item-3 {
+        grid-row-start: 4;
+        grid-column-start: 5;
+        grid-row-end: 6;
+        grid-column-end: 8;
+
+    }
+    #item-4 {
+        grid-row-start: 4;
+        grid-column-start: 3;
+        grid-row-end: 6;
+        grid-column-end: 5;
+
+    }
+    #item-5 {
+        grid-row-start: 5;
+        grid-column-start: 1;
+        grid-row-end: 6;
+        grid-column-end: 3;
+    }
+    #item-2 form {
+        position: absolute;
+        bottom: 0;
+        padding: 10px;
+    }
+    #item-2 input[type="text"],
+    #item-2 input[type="submit"] {
+        background-color: #cbd5cd;
+        margin-bottom: 5px;
+        padding: 0.5vh 0.8vh;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+    }
+    #item-2 input[type="submit"] {
+        background-color: #5e7052;
+        color: #e8e8e8;
+        cursor: pointer;
+    }
+
+</style>
 {% endblock %}
 
 {% block content %}
-    <h2>{{ project_name }}</h2>
+    <div id="contener-top">
+        <div class="floating-box" style="min-width: 20%">{{ project_name }}</div>
+        <div style="display: flex;">
+            <div class="floating-box" style="margin-right: 2vh;" id="contener-top-date">03.01.2025</div>
+            <div class="floating-box" id="contener-top-time">14:44</div>
+        </div>
+    </div>
+    <div id="contener-bottom">
+          <div id="item-0" class="floating-box">0</div>
+          <div id="item-1" class="floating-box">1</div>
+          <div id="item-2" class="floating-box">
+              Osoby biorące udział:
+              <form action="//" method="post">
+                  <input type="text" name="new-user-name" placeholder="Wpisz nazwę osoby">
+                  <input type="submit" value="Dodaj osobę">
+              </form>
+          </div>
+          <div id="item-3" class="floating-box">3</div>
+          <div id="item-4" class="floating-box">4</div>
+          <div id="item-5" class="floating-box">5</div>
+    </div>
 
+{% endblock %}
+
+
+{% block js %}
+<script>
+    function addZero(num) {
+        return (num < 10 ? '0' : '') + num;
+    }
+
+    function updateDateTime() {
+        const now = new Date();
+        const formattedDate = `${addZero(now.getDate())}.${addZero(now.getMonth() + 1)}.${now.getFullYear() % 100}`;
+        const formattedTime = `${addZero(now.getHours())}:${addZero(now.getMinutes())}`;
+        document.getElementById('contener-top-date').textContent = `${formattedDate}`;
+        document.getElementById('contener-top-time').textContent = `${formattedTime}`;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+</script>
 {% endblock %}

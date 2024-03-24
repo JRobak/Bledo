@@ -1,0 +1,106 @@
+{% extends 'main.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block css %}
+    <style>
+        .task-box {
+            min-width: 400px;
+            background-color: var(--bg-tasks-color);
+            margin: 0.5vh 0.5vh;
+            border-radius: 1vh;
+            white-space: normal;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            margin-left: 2vh;
+        }
+        .task-box:first-child {
+            margin-left: 0;
+        }
+
+        .task-box ul li {
+            padding-left: 6px;
+            user-select: none;
+        }
+        .task-box ul li.none {
+            list-style-type: "\2aa7";
+            color: white;
+            text-decoration: none;
+        }
+        .task-box ul li.line-through {
+            list-style-type: "\2aa9";
+            color: #595f72;
+            text-decoration: line-through;
+        }
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            margin: 0;
+            background-color: var(--task-box-color);
+            padding: 0 1vh;
+            font-family: 'Courier New', Courier, monospace;
+            border-bottom: 0.6vh var(--title-border-color) solid;
+            color: #c4c8d5;
+        }
+
+        #content {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+<script>
+    var listItems = document.querySelectorAll("li");
+
+    listItems.forEach(function(listItem) {
+        listItem.addEventListener("click", function() {
+
+            if (this.style.textDecoration === "line-through") {
+                this.style.textDecoration = "none";
+                this.classList.remove("line-through");
+                this.classList.add("none");
+            } else {
+                this.style.textDecoration = "line-through";
+                this.classList.remove("none");
+                this.classList.add("line-through");
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+    <div class="task-box">
+        <div class="task-header"><h3>&ratio; Zadania na dzisiaj</h3><h3 style="font-size: smaller;">2/5</h3></div>
+        <ul>
+            <li class="none">Przykładowe zadanie 1</li>
+            <li class="none">Przykładowe zadanie 1</li>
+            <li class="line-through">Przykładowe zadanie 2</li>
+            <li class="line-through">Przykładowe zadanie 2</li>
+            <li class="none">Przykładowe zadanie 1</li>
+        </ul>
+    </div>
+    <div class="task-box">
+        <div class="task-header"><h3>&because; Zadania na jutro</h3><h3 style="font-size: smaller;">2/5</h3></div>
+        <ul>
+            <li class="none">Przykładowe zadanie 1</li>
+            <li class="none">Przykładowe zadanie 1</li>
+        </ul>
+    </div>
+    <div class="task-box">
+        <div class="task-header"><h3>&ctdot; Zadania w tym tygodniu</h3><h3 style="font-size: smaller;">2/5</h3></div>
+        <ul>
+            <li class="none">Przykładowe zadanie 1</li>
+            <li class="none">Przykładowe zadanie 1</li>
+        </ul>
+    </div>
+    <div class="task-box">
+        <div class="task-header"><h3>&Proportion; Zadania na ten miesiąc</h3><h3 style="font-size: smaller;">2/5</h3></div>
+        <ul>
+            <li class="none">Przykładowe zadanie 1</li>
+            <li class="none">Przykładowe zadanie 1</li>
+        </ul>
+    </div>
+{% endblock %}

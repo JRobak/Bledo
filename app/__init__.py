@@ -1,5 +1,5 @@
 from flask import Flask
-from routes import account, login, projects, errors
+from routes import account, login, projects, errors, tasks
 
 
 def create_app():
@@ -9,5 +9,6 @@ def create_app():
     app.register_blueprint(login.login_)
     app.register_blueprint(projects.projects_)
     app.register_blueprint(errors.errors_)
+    app.register_blueprint(tasks.tasks_)
 
     return app

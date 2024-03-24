@@ -14,7 +14,8 @@
             margin: 0;
             height: 100%;
             overflow: hidden;
-            font-family: Arial, sans-serif;
+            font-family: "Comic Sans MS", sans-serif;
+            /*font-family: Verdana;*/
         }
 
         /* Scrollbar */
@@ -49,6 +50,7 @@
             overflow: auto;
             font-size: 20px;
             border: #000 solid 3px;
+            background-image: url("{{ url_for('static', filename='image/bg.png') }}");
         }
         #bar {
             width: 13%;
@@ -74,10 +76,25 @@
             height: 100%;
             display: flex;
             align-items: center;
-            margin: 10px 0;
+            margin: 0 0 10px 0;
         }
-    {% block css %}{% endblock %}
+        .side_link {
+            font-size: 18px;
+            padding: 10px 5px;
+            cursor: pointer;
+            color: black; /*#e2e5e2*/
+            /*text-shadow: var(--side-link-text-shadow) 1px 1px 1px;*/
+        }
+
+        .side_link:hover {
+            background-color: var(--side-link-bg-hover);
+            border: var(--side-link-bg-hover-border) solid 1px;
+            border-radius: 5px;
+            color: var(--button-text);
+            font-weight: bold;
+        }
     </style>
+    {% block css %}{% endblock %}
 </head>
 <body>
     <div id="container">
@@ -90,20 +107,28 @@
                                 <img src="{{ url_for('static', filename='image/' + g.user_image) }}" style="height: 70px; width: 70px; border-radius: 50%;">
                             {% endif %}
                         </div>
-                        {{ g.username }}
+                        <div style="margin-left: 10px;">
+                            <div style="font-size: 24px; font-weight: bold;">{{ g.username }}</div>
+                            <div style="font-size: 18px;">&#x10a55; Twój profil</div>
+                        </div>
                     </div>
                 </div>
             </a>
             <hr color="#212b28">
-            <a href="/projects/">
+
                 <div>
-                    <div>Wyswietl projekty</div>
+                    <a href="/projects/"><div class="side_link">&#x039e; Wyswietl projekty</div></a>
+                    <a href="/tasks/"><div class="side_link">&#x109a4; Zadania</div></a>
+                    <a href="#"><div class="side_link">3</div></a>
+                    <a href="#"><div class="side_link">4</div></a>
                 </div>
-            </a>
+
         </div>
         <div id="content">
             {% block content %}{% endblock %}
         </div>
     </div>
+
+        {% block js %}{% endblock %}
 </body>
 </html>

@@ -28,7 +28,7 @@ def add_new_project():
         if not check_exists_project(new_project_name, user_id):
             add_new_project_db(new_project_name, user_id)
 
-        return view_project(new_project_name)
+        return redirect(f'/project/{new_project_name}/')
 
     return redirect(url_for('account.account'))
 

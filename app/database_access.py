@@ -10,7 +10,8 @@ def check_exists_user(name):
 
 
 def add_new_user(name):
-    g.cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
+    img_path = "default.png"
+    g.cursor.execute("INSERT INTO users (name, img_path) VALUES (?, ?)", (name, img_path))
     g.db.commit()
 
 
@@ -28,18 +29,18 @@ def get_user_name_by_id(id):
 
 # projects
 def add_new_project(name, user_id):
-    g.cursor.execute("INSERT INTO projects (name, id_user) VALUES (?, ?)", (name, user_id))
+    g.cursor.execute("INSERT INTO projects(name, user_id_creator) VALUES (?, ?)", (name, user_id))
     g.db.commit()
 
 
 def check_exists_project(name, user_id):
-    query = f"SELECT name FROM projects WHERE name = ? AND id_user = ?"
+    query = f"SELECT name FROM projects WHERE name = ? AND user_id_creator = ?"
     g.cursor.execute(query, (name, user_id))
     return g.cursor.fetchone() is not None
 
 
 def get_user_tables_by_user_id(user_id):
-    query = f"SELECT name FROM projects WHERE id_user = ?"
+    query = f"SELECT name FROM projects WHERE user_id_creator = ?"
     g.cursor.execute(query, (user_id,))
     return g.cursor.fetchall()
 
@@ -64,13 +65,13 @@ def check_exists_number_session(nr):
 
 
 def get_session_number_by_user_id(user_id):
-    query = f"SELECT session_number FROM sessions WHERE id_user = ?"
+    query = f"SELECT session_number FROM sessions WHERE user_id = ?"
     g.cursor.execute(query, (user_id,))
     return str(g.cursor.fetchone())[2:-3]
 
 
 def get_user_id_by_nr_session(nr_session):
-    query = f"SELECT id_user FROM sessions WHERE session_number = ?"
+    query = f"SELECT user_id FROM sessions WHERE session_number = ?"
     g.cursor.execute(query, (nr_session,))
     return str(g.cursor.fetchone())[1:-2]
 
@@ -84,7 +85,7 @@ def create_new_session(user_id):
     date_of_creation = datetime.now().strftime("%d-%m-%Y")
     expiration_date = (datetime.now() + timedelta(days=4)).strftime("%d-%m-%Y")
 
-    g.cursor.execute("INSERT INTO sessions (id_user, session_number, date_of_creation, expiration_date) VALUES (?, ?, ?, ?)", (user_id, new_session_number, date_of_creation, expiration_date))
+    g.cursor.execute("INSERT INTO sessions (user_id, session_number, date_of_creation, expiration_date) VALUES (?, ?, ?, ?)", (user_id, new_session_number, date_of_creation, expiration_date))
     g.db.commit()
 
     return new_session_number
