@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from flask import g
 
+from app.business import User
+
 
 # users
 def check_exists_user(name):
@@ -9,10 +11,20 @@ def check_exists_user(name):
     return g.cursor.fetchone() is not None
 
 
-def add_new_user(name):
+def add_new_user(name: str):
     img_path = "default.png"
-    g.cursor.execute("INSERT INTO users (name, img_path) VALUES (?, ?)", (name, img_path))
+    cursor = g.cursor.execute("INSERT INTO users (name, img_path) VALUES (?, ?)", (name, img_path))
     g.db.commit()
+    result = User()
+    result.id = cursor.lastrowid()
+    result.thumbnail = img_path
+    return img_path
+
+
+# # --- this is the way
+# def add_new_users(user: User):
+#     g.cursor.execute("INSERT INTO users (name, img_path) VALUES (?, ?)", (user.name, user.thumbnail))
+#     g.db.commit()
 
 
 def get_user_id_by_name(name):
@@ -128,3 +140,27 @@ def delete_session(nr):
     query = "DELETE FROM sessions WHERE session_number = ?"
     g.cursor.execute(query, (nr,))
     g.db.commit()
+
+
+def get_user_by_name(name: str) -> User:
+    query = f"SELECT id, name FROM users WHERE name = ?"
+
+    db_result =g.cursor.execute(query, (name,)).fetchone()
+    result = User()
+    result.id = db_result[0]
+    result.name = db_result[1]
+    return result
+
+
+def get_users():
+    query = f"SELECT id, name FROM users"
+
+    db_result = g.cursor.execute(query).fetchall()
+    result = []
+    for u in db_result:
+        user = User()
+        user.id = u[0]
+        user.name = u[1]
+        result.append(u)
+
+    return result
