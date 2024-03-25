@@ -33,14 +33,12 @@
         grid-column-start: 1;
         grid-row-end: 5;
         grid-column-end: 3;
-
     }
     #item-1 {
         grid-row-start: 1;
         grid-column-start: 3;
         grid-row-end: 4;
         grid-column-end: 5;
-
     }
     #item-2 {
         grid-row-start: 1;
@@ -54,14 +52,12 @@
         grid-column-start: 5;
         grid-row-end: 6;
         grid-column-end: 8;
-
     }
     #item-4 {
         grid-row-start: 4;
         grid-column-start: 3;
         grid-row-end: 6;
         grid-column-end: 5;
-
     }
     #item-5 {
         grid-row-start: 5;
@@ -88,6 +84,27 @@
         color: #e8e8e8;
         cursor: pointer;
     }
+    .user-take-part-in-box {
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+    }
+    .user-take-part-in-box img {
+        border: 1px solid black;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin: 0 8px;
+    }
+    #item-2-users-box {
+        overflow: auto;
+        white-space: normal;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        word-wrap: break-word;
+        max-height: 350px;
+    }
+
 
 </style>
 {% endblock %}
@@ -104,7 +121,17 @@
           <div id="item-0" class="floating-box">0</div>
           <div id="item-1" class="floating-box">1</div>
           <div id="item-2" class="floating-box">
-              Osoby biorące udział:
+              <h3 style="padding: 0; margin: 5px 0;">Osoby biorące udział:</h3>
+
+              <div id="item-2-users-box">
+                  {% for user in users_and_images %}
+                    <div class="user-take-part-in-box">
+                        <img src="{{ url_for('static', filename='image/' + users_and_images[user] )}}">
+                        {{user}}
+                    </div>
+                  {% endfor %}
+              </div>
+
               <form action="//" method="post">
                   <input type="text" name="new-user-name" placeholder="Wpisz nazwę osoby">
                   <input type="submit" value="Dodaj osobę">
@@ -126,7 +153,7 @@
 
     function updateDateTime() {
         const now = new Date();
-        const formattedDate = `${addZero(now.getDate())}.${addZero(now.getMonth() + 1)}.${now.getFullYear() % 100}`;
+        const formattedDate = `${addZero(now.getDate())}.${addZero(now.getMonth() + 1)}.${now.getFullYear()}`;
         const formattedTime = `${addZero(now.getHours())}:${addZero(now.getMinutes())}`;
         document.getElementById('contener-top-date').textContent = `${formattedDate}`;
         document.getElementById('contener-top-time').textContent = `${formattedTime}`;

@@ -39,10 +39,28 @@ def check_exists_project(name, user_id):
     return g.cursor.fetchone() is not None
 
 
+def get_project_id(name, user_id):
+    query = f"SELECT id FROM projects WHERE name = ? AND user_id_creator = ?"
+    g.cursor.execute(query, (name, user_id))
+    return str(g.cursor.fetchone())[1:-2]
+
+
 def get_user_tables_by_user_id(user_id):
     query = f"SELECT name FROM projects WHERE user_id_creator = ?"
     g.cursor.execute(query, (user_id,))
     return g.cursor.fetchall()
+
+
+def get_users_in_project_by_project_id(project_id):
+    query = f"SELECT user_id FROM access_projects WHERE project_id = ?"
+    g.cursor.execute(query, (project_id,))
+    return g.cursor.fetchall()
+
+
+def get_user_host_project_by_project_id(project_id):
+    query = f"SELECT user_id_creator FROM projects WHERE id = ?"
+    g.cursor.execute(query, (project_id,))
+    return str(g.cursor.fetchone())[1:-2]
 
 
 # image
