@@ -2,3 +2,6 @@
 venv
 note
 databases
+.pytest_cache
+*.pyc
+__pycache__

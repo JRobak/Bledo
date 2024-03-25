@@ -13,6 +13,7 @@ def create_database_file():
 
 
 def create_tables():
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
