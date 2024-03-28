@@ -2,3 +2,4 @@
 venv
 note
 databases
+__pycache__

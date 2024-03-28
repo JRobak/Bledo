@@ -38,13 +38,12 @@ def test_user_project(app):
 
     app.post("/add_new_project/", data={'new_project_name': 'projekt'})
     response = app.get("/project/projekt/")
-    assert response.data.decode("utf-8").find('<h2>projekt</h2>') > 0
+    assert response.data.decode("utf-8").find('<div class="floating-box" style="min-width: 20%">projekt</div>') > 0
 
 
 def test_static_folder(app):
     # response = app.post('/change_image/', data={'image_file': 'test_image.png'})
-    # print(response.status_code)
-    response = app.get("/static/image/RnaZtle.png")
+    response = app.get("/static/image/default.png")
     assert response.status_code == 200
 
     response = app.get("/static/image/1njkzvi.gif")
