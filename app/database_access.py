@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from flask import g
+from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 
 # users
 def check_exists_user(name):
