@@ -1,8 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
-from app.main import app
+from datetime import datetime
 
-db = SQLAlchemy()
-db.init_app(app)
+from flask_sqlalchemy import SQLAlchemy
+from lib.__init__ import db
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -37,11 +37,11 @@ class Project(db.Model):
 class Session(db.Model):
     __tablename__ = 'sessions'
 
-    id = db.Column("id", db.Integer, primary_key=True)
-    user_id = db.Column("user_id", db.Integer, db.ForeignKey('users.id'))
-    session_number = db.Column('session_number', db.String)
-    date_of_creation = db.Column('date_of_creation', db.Date)
-    expiration_date = db.Column('expiration_date', db.Date)
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    session_number = db.Column(db.String(255), unique=True, nullable=False)
+    date_of_creation = db.Column(db.String(8), nullable=False, default=datetime.utcnow().strftime('%d-%m-%Y'))
+    expiration_date = db.Column(db.String(8), nullable=False)
 
     def __init__(self, user_id, session_number, date_of_creation, expiration_date):
         self.user_id = user_id

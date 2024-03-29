@@ -1,5 +1,8 @@
 from datetime import datetime, timedelta
 from flask import g
+# from flask_sqlalchemy import SQLAlchemy
+#
+# db = SQLAlchemy()
 
 
 # users

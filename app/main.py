@@ -1,12 +1,20 @@
-import os
-from flask_sqlalchemy import SQLAlchemy
+from flask import g
 from app import create_app
+from lib.__init__ import db
+from lib.session import get_session_number
 
-app = create_app()
+app = create_app(db)
 
-db_path = os.path.join(os.environ['BLEDO_DATABASE_PATH'], 'bledo_databases.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+@app.before_request
+def before_request():
+    nr_session = get_session_number()
+    if nr_session:
+        from lib.query_models import get_user_by_nr_session
+        user = get_user_by_nr_session(nr_session)
+        if user:
+            g.username = user.name
+            g.user_image = user.img_path
 
 
 if __name__ == '__main__':
