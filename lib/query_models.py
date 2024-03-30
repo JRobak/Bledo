@@ -38,16 +38,17 @@ def check_exists_project(name, user_id):
     return Project.query.filter_by(name=name, user_id=user_id).first()
 
 
-def get_project_id(name, user_id):
-    pass
+def get_project_by_name_and_user(name, user_id):
+    return Project.query.filter_by(name=name, user_id=user_id).first()
 
 
-def get_user_tables_by_user_id(user_id):
-    pass
+def get_user_projects_name_by_user_id(user_id):
+    projects = Project.query.filter_by(user_id_creator=user_id).all()
+    return [project.name for project in projects]
 
 
 def get_users_in_project_by_project_id(project_id):
-    pass
+    users = User.query.filter_by(project_id=project_id).all()
 
 
 def get_user_host_project_by_project_id(project_id):
@@ -56,8 +57,8 @@ def get_user_host_project_by_project_id(project_id):
 
 # image
 def change_image_user(user_id, path_to_image):
-    user = User.query.filter_by(user_id=user_id).first()
-    user.image_path = path_to_image
+    user = User.query.filter_by(id=user_id).first()
+    user.img_path = path_to_image
     db.session.commit()
 
 

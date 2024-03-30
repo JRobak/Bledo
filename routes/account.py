@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, redirect, url_for
 import os
-from app.database_access import change_image_user, get_user_id_by_nr_session
+from lib.query_models import change_image_user, get_user_by_nr_session
 from lib.session import get_session_number
 
 account_ = Blueprint('account', __name__)
@@ -18,6 +18,8 @@ def account():
 
 @account_.route('/change_image/', methods=["POST"])
 def change_image():
+
+    nr_session = get_session_number()
 
     if request.method == "POST":
         if 'image_file' not in request.files:
@@ -47,9 +49,8 @@ def change_image():
         except Exception as e:
             return redirect(url_for('account.account', error="Blad przy zapisie pliku, sprobuj ponownie"))
 
-        session = request.cookies.get('session')
-        user_id = get_user_id_by_nr_session(session)
-        change_image_user(user_id, new_filename)
+        user = get_user_by_nr_session(nr_session)
+        change_image_user(user.id, new_filename)
         return redirect(url_for('account.account'))
 
     return redirect(url_for('account.account', error="Cos poszlo nie tak"))

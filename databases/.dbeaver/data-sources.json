@@ -1,7 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-		"sqlite_jdbc-18e5ca79426-21ab9b296eabc63e": {
+		"sqlite_jdbc-18e8ab55bf8-5ac014ea0835f399": {
 			"provider": "sqlite",
 			"driver": "sqlite_jdbc",
 			"name": "bledo_databases.db",
@@ -9,32 +9,6 @@
 			"configuration": {
 				"database": "R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
 				"url": "jdbc:sqlite:R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
-				"configurationType": "MANUAL",
-				"type": "dev",
-				"auth-model": "native"
-			}
-		},
-		"sqlite_jdbc-18e5dcd1e6b-66ee6b2429847d20": {
-			"provider": "sqlite",
-			"driver": "sqlite_jdbc",
-			"name": "bledo_databases.db 2",
-			"save-password": true,
-			"configuration": {
-				"database": "R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
-				"url": "jdbc:sqlite:R:\\PROGRAMOWANIE\\PYTHON\\Bledo\\databases\\bledo_databases.db",
-				"configurationType": "MANUAL",
-				"type": "dev",
-				"auth-model": "native"
-			}
-		},
-		"sqlite_jdbc-18e79f36ed1-58647327d9bf4bcc": {
-			"provider": "sqlite",
-			"driver": "sqlite_jdbc",
-			"name": "bledo_databases.db 3",
-			"save-password": true,
-			"configuration": {
-				"database": "C:\\Users\\livei\\AppData\\Local\\Temp\\pytest-of-livei\\pytest-2\\test_user_login0\\bledo_databases.db",
-				"url": "jdbc:sqlite:C:\\Users\\livei\\AppData\\Local\\Temp\\pytest-of-livei\\pytest-2\\test_user_login0\\bledo_databases.db",
 				"configurationType": "MANUAL",
 				"type": "dev",
 				"auth-model": "native"

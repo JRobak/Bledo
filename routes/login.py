@@ -7,7 +7,6 @@ login_ = Blueprint('login', __name__)
 @login_.route('/login/', methods=['GET', 'POST'])
 def login():
     title = 'Zaloguj się'
-    print('login giet')
 
     if 'session' in request.cookies:
         return make_response(redirect(url_for('account.account')))

@@ -10,5 +10,5 @@ def app(tmpdir):
     create_database_file()
     create_tables()
 
-    from app.main import app
+    from app.wsgi import app
     return app.test_client()

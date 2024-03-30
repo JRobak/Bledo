@@ -1,9 +1,9 @@
 from flask import g
 from app import create_app
-from lib.__init__ import db
+from lib.__init__ import db, migrate
 from lib.session import get_session_number
 
-app = create_app(db)
+app = create_app(db, migrate)
 
 
 @app.before_request

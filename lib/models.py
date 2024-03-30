@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from flask_sqlalchemy import SQLAlchemy
 from lib.__init__ import db
 
@@ -7,9 +6,9 @@ from lib.__init__ import db
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column("name", db.String)
-    img_path = db.Column("img_path", db.String)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    img_path = db.Column(db.String)
 
     def __init__(self, name):
         self.name = name
@@ -22,9 +21,9 @@ class User(db.Model):
 class Project(db.Model):
     __tablename__ = 'projects'
 
-    id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column("name", db.String)
-    user_id_creator = db.Column("user_id_creator", db.Integer, db.ForeignKey('users.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    user_id_creator = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __init__(self, name, user_id_creator):
         self.name = name
@@ -56,26 +55,16 @@ class Session(db.Model):
 class Access_project(db.Model):
     __tablename__ = 'access_projects'
 
-    id = db.Column("id", db.Integer, primary_key=True)
-    user_id = db.Column("user_id", db.Integer, db.ForeignKey('users.id'))
-    project_id = db.Column("project_id", db.Integer, db.ForeignKey('projects.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+    description = db.Column(db.String, nullable=True)
 
-    def __init__(self, user_id, project_id):
+    def __init__(self, user_id, project_id, description):
         self.user_id = user_id
         self.project_id = project_id
+        self.description = 'rgrgr'
 
     def __repr__(self):
-        return f"{self.id} {self.user_id} {self.project_id}"
+        return f"{self.id} {self.user_id} {self.project_id} {self.description}"
 
-
-# Base.metadata.create_all(engine)
-#
-# Session = sessionmaker(bind=engine)
-# session = Session()
-
-# user = User("Mike", "f.png")
-# session.add(user)
-# session.commit()
-#
-# users = session.query(User).all()
-# print(users)
