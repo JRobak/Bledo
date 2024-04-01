@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 
-{% block title %} {{title}} {% endblock %}
+{% block title %} {{ project_name }} {% endblock %}
 
 {% block css %}
 <style>
@@ -104,7 +104,7 @@
         overflow-y: auto;
         scroll-behavior: smooth;
         word-wrap: break-word;
-        max-height: 350px;
+        max-height: 400px;
     }
     .user-take-part-in-box:first-child {
         color: #000000;
@@ -142,18 +142,19 @@
                         <div class="user-take-part-in-position">{{ user[2] }}</div>
                     </div>
                   {% endfor %}
+                  {% if is_host %}
+                      <br><form action="/add_new_user/" method="POST">
+                        <input type="hidden" name="project_id" value="{{ project_id }}">
+                        {% if error %}
+                            <input type="text" name="new-user-name" placeholder="{{ error }}">
+                        {% else %}
+                            <input type="text" name="new-user-name" placeholder="Wpisz nazwę osoby">
+                        {% endif %}
+                        <input type="submit" value="Dodaj osobę">
+                    </form>
+                  {% endif %}
               </div>
-
-              <form action="/add_new_user/" method="POST">
-                <input type="hidden" name="project_id" value="{{ project_id }}">
-                {% if error %}
-                    <input type="text" name="new-user-name" placeholder="{{ error }}">
-                {% else %}
-                    <input type="text" name="new-user-name" placeholder="Wpisz nazwę osoby">
-                {% endif %}
-                <input type="submit" value="Dodaj osobę">
-            </form>
-          </div>
+            </div>
 <!--          <div id="item-3" class="floating-box">3</div>-->
           <div id="item-4" class="floating-box">
 

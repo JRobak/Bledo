@@ -52,7 +52,9 @@ def view_project(project_name):
     host = get_host_project(project.id)
     users.insert(0, [host.name, host.img_path, 'Creator'])
 
-    return render_template('view_project.html', project_name=project.name, users=users, project_id=project.id, error=error)
+    is_host = user.id == host.id
+
+    return render_template('view_project.html', project_name=project.name, users=users, project_id=project.id, error=error, is_host=is_host)
 
 
 # DODAJE NOWEGO UZYTKOWNIKA DO PROJEKTU

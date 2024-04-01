@@ -35,6 +35,13 @@ def change_position_user_by_nr_session(nr, position):
     db.session.commit()
 
 
+def change_description_user_by_nr_session(nr, description):
+    session = Session.query.filter_by(session_number=str(nr)).first()
+    user = User.query.filter_by(id=session.user_id).first()
+    user.description = description
+    db.session.commit()
+
+
 # projects
 def add_new_project(name, user_id):
     project = Project(name, user_id)

@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, request, redirect, url_for
 import os
-from lib.query_models import change_image_user, get_user_by_nr_session, change_position_user_by_nr_session
+from lib.query_models import change_image_user, get_user_by_nr_session, change_position_user_by_nr_session, \
+    change_description_user_by_nr_session
 from lib.session import get_session_number
 
 account_ = Blueprint('account', __name__)
@@ -64,6 +65,17 @@ def change_job_position():
     if request.method == "POST":
         position_text = request.form.get('position_text')
         change_position_user_by_nr_session(nr_session, position_text)
+
+        return redirect(url_for('account.account'))
+
+
+@account_.route('/change_description_user/', methods=["POST"])
+def change_description_user():
+    nr_session = get_session_number()
+
+    if request.method == "POST":
+        description_text = request.form.get('description_text')
+        change_description_user_by_nr_session(nr_session, description_text)
 
         return redirect(url_for('account.account'))
 

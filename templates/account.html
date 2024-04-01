@@ -6,12 +6,15 @@
 <style>
     /* Form */
     form {
-        border: 2px solid black;
-        padding: 20px;
-        padding-bottom: 15px;
+        border: 2px solid #1b1c19;
+        padding: 20px 20px 15px;
         margin-bottom: 20px;
-        max-width: 600px;
+        max-width: 44%;
         width: 100%;
+    }
+    form:hover {
+        background-color: rgba(43, 74, 62, 0.2);
+        border: 2px solid #2d332d;
     }
     input[type="file"] {
         margin-bottom: 10px;
@@ -40,10 +43,13 @@
         font-size: larger;
     }
 
-    input[type="text"]{
+    input[type="text"], textarea{
         padding: 3px 5px;
         margin-bottom: 10px;
         font-size: 18px;
+        border-radius: 5px;
+        background-color: #c3d0c3;
+        border: 2px solid #2d332d;
     }
 
     /* Logout Button */
@@ -88,13 +94,13 @@
     <form action="/change_job_position/" method="post">
         <label>Stanowisko:</label>
         <input type="text" name="position_text"value="{{user.position}}">
-        <button type="submit" style="width: 30%">ZMIEN NAZWE STANOWISKA!</button>
+        <button type="submit" >ZMIEN NAZWE STANOWISKA!</button>
     </form>
     <br>
     <form action="/change_description_user/" method="post">
-        <label>Opis:</label>
-        <input type="text" name="description_text"value="{{user.description}}">
-        <button type="submit" style="width: 30%">ZMIEN OPIS!</button>
+        <label>Opis:</label><br>
+        <center><textarea type="text" name="description_text" style="width: 80%; padding: 5px 8px; border-radius: 15px;" rows="7">{{user.description}}</textarea></center>
+        <button type="submit">ZMIEN OPIS!</button>
     </form>
 
     <a href="/logout/" id="logout-btn" style="position: absolute; bottom: 34px; right: 44px;">Wyloguj się!</a>
