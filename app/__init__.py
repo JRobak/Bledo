@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from routes import account, login, projects, errors, tasks
+from routes import account, login, projects, errors, tasks, user_search
 
 
 def create_app(db, migrate):
@@ -23,5 +23,6 @@ def create_app(db, migrate):
     app.register_blueprint(projects.projects_)
     app.register_blueprint(errors.errors_)
     app.register_blueprint(tasks.tasks_)
+    app.register_blueprint(user_search.user_search_)
 
     return app

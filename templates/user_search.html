@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+{% block title %} Wyszukiwarka użytkowników {% endblock %}
+
+{% block css %}
+<style>
+    #contener {
+        display: grid;
+        /*margin-top: 2vh;*/
+        grid-template-rows: repeat(8, 1fr);
+        grid-template-columns: repeat(11, 1fr);
+        gap: 2vh;
+        flex-grow: 1;
+    }
+    .floating-box {
+        background-color: var(--bg-floating-box);
+        padding: 1vh 2.2vh;
+        border-radius: 20px;
+        border: black solid 2px;
+    }
+    #content {
+        display: flex;
+        flex-direction: column;
+    }
+    #item-0 {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: 2;
+        grid-column-end: 8;
+    }
+    #item-1 {
+        grid-row-start: 2;
+        grid-column-start: 1;
+        grid-row-end: 9;
+        grid-column-end: 8;
+    }
+    #item-2 {
+        grid-row-start: 1;
+        grid-column-start: 8;
+        grid-row-end: 9;
+        grid-column-end: 14;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div id="contener">
+          <div id="item-0" class="floating-box">wyszukiwarka</div>
+          <div id="item-1" class="floating-box">wyniki</div>
+          <div id="item-2" class="floating-box">opis osoby kliknietej</div>
+    </div>
+
+{% endblock %}

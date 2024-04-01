@@ -95,13 +95,24 @@ def get_host_project(project_id):
 
 def add_new_user_by_project_id_and_user_name(project_id, user_name):
     user = User.query.filter_by(name=user_name).first()
-    if not user or Access_project.query.filter_by(user_id=user.id).first():
+    if not user:
+        return None
+    if exist_user_in_project(project_id, user.id):
         return None
 
-    new_access = Access_project(user.id, project_id, 'Description')
+    new_access = Access_project(user_id=user.id, project_id=project_id, description='Description')
     db.session.add(new_access)
     db.session.commit()
     return new_access
+
+
+def exist_user_in_project(project_id, user_id):
+    user = Project.query.filter_by(id=project_id, user_id_creator=user_id).first()
+    if user:
+        return True
+
+    user = Access_project.query.filter_by(project_id=project_id, user_id=user_id).first()
+    return user
 
 
 # image
