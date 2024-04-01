@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from flask import g
-from .models import User, Project, Session
+from .models import User, Project, Session, Access_project
 from lib.__init__ import db
 
 
@@ -27,6 +27,14 @@ def get_user_by_nr_session(nr):
     return User.query.filter_by(id=session.user_id).first()
 
 
+# user info
+def change_position_user_by_nr_session(nr, position):
+    session = Session.query.filter_by(session_number=str(nr)).first()
+    user = User.query.filter_by(id=session.user_id).first()
+    user.position = position
+    db.session.commit()
+
+
 # projects
 def add_new_project(name, user_id):
     project = Project(name, user_id)
@@ -35,11 +43,28 @@ def add_new_project(name, user_id):
 
 
 def check_exists_project(name, user_id):
-    return Project.query.filter_by(name=name, user_id=user_id).first()
+    return Project.query.filter_by(name=name, user_id_creator=user_id).first()
+
+
+def get_project_by_id(project_id):
+    project = Project.query.filter_by(id=project_id).all()
+    return project[0].name
 
 
 def get_project_by_name_and_user(name, user_id):
-    return Project.query.filter_by(name=name, user_id=user_id).first()
+    project = Project.query.filter_by(name=name, user_id_creator=user_id).first()
+    if not project:
+        access_projects = Access_project.query.filter_by(user_id=user_id).all()
+        access_project_ids = [access.project_id for access in access_projects]
+        project = Project.query.filter(Project.name == name, Project.id.in_(access_project_ids)).first()
+    return project
+
+
+def get_access_project_by_id(user_id):
+    access = Access_project.query.filter_by(user_id=user_id).all()
+    access_ids = [x.project_id for x in access]
+    projects = Project.query.filter(Project.id.in_(access_ids)).all()
+    return [project.name for project in projects]
 
 
 def get_user_projects_name_by_user_id(user_id):
@@ -48,11 +73,28 @@ def get_user_projects_name_by_user_id(user_id):
 
 
 def get_users_in_project_by_project_id(project_id):
-    users = User.query.filter_by(project_id=project_id).all()
+    split = '/split/'
+    access_list = Access_project.query.filter_by(project_id=project_id).all()
+    users = User.query.filter(User.id.in_([access.user_id for access in access_list])).all()
+    users = [split.join([str(user.name), str(user.img_path), str(user.position)]) for user in users]
+
+    return [str(x).split(split) for x in users]
 
 
-def get_user_host_project_by_project_id(project_id):
-    pass
+def get_host_project(project_id):
+    project = Project.query.filter_by(id=project_id).first()
+    return User.query.filter_by(id=project.user_id_creator).first()
+
+
+def add_new_user_by_project_id_and_user_name(project_id, user_name):
+    user = User.query.filter_by(name=user_name).first()
+    if not user or Access_project.query.filter_by(user_id=user.id).first():
+        return None
+
+    new_access = Access_project(user.id, project_id, 'Description')
+    db.session.add(new_access)
+    db.session.commit()
+    return new_access
 
 
 # image

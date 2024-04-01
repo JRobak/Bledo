@@ -8,14 +8,15 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    img_path = db.Column(db.String)
+    img_path = db.Column(db.String, default="default.png")
+    position = db.Column(db.String, default='Brak stanowiska')
+    description = db.Column(db.String, default='Brak Opisu')
 
     def __init__(self, name):
         self.name = name
-        self.img_path = "default.png"
 
     def __repr__(self):
-        return f"{self.id} {self.name} {self.img_path}"
+        return f"{self.id} {self.name} {self.img_path} {self.position}"
 
 
 class Project(db.Model):
@@ -63,7 +64,7 @@ class Access_project(db.Model):
     def __init__(self, user_id, project_id, description):
         self.user_id = user_id
         self.project_id = project_id
-        self.description = 'rgrgr'
+        self.description = description
 
     def __repr__(self):
         return f"{self.id} {self.user_id} {self.project_id} {self.description}"

@@ -8,8 +8,9 @@
     form {
         border: 2px solid black;
         padding: 20px;
+        padding-bottom: 15px;
         margin-bottom: 20px;
-        max-width: 400px;
+        max-width: 600px;
         width: 100%;
     }
     input[type="file"] {
@@ -32,6 +33,17 @@
     }
     button[type="submit"]:focus {
         outline: none;
+    }
+
+    label {
+        color: white;
+        font-size: larger;
+    }
+
+    input[type="text"]{
+        padding: 3px 5px;
+        margin-bottom: 10px;
+        font-size: 18px;
     }
 
     /* Logout Button */
@@ -71,6 +83,18 @@
         {% endif %}
         <br>
         <button type="submit">ZMIEN ZDJECIE!</button>
+    </form>
+    <br>
+    <form action="/change_job_position/" method="post">
+        <label>Stanowisko:</label>
+        <input type="text" name="position_text"value="{{user.position}}">
+        <button type="submit" style="width: 30%">ZMIEN NAZWE STANOWISKA!</button>
+    </form>
+    <br>
+    <form action="/change_description_user/" method="post">
+        <label>Opis:</label>
+        <input type="text" name="description_text"value="{{user.description}}">
+        <button type="submit" style="width: 30%">ZMIEN OPIS!</button>
     </form>
 
     <a href="/logout/" id="logout-btn" style="position: absolute; bottom: 34px; right: 44px;">Wyloguj się!</a>

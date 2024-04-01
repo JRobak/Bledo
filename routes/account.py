@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, redirect, url_for
 import os
-from lib.query_models import change_image_user, get_user_by_nr_session
+from lib.query_models import change_image_user, get_user_by_nr_session, change_position_user_by_nr_session
 from lib.session import get_session_number
 
 account_ = Blueprint('account', __name__)
@@ -12,8 +12,9 @@ def account():
     error = request.args.get('error')
 
     nr_session = get_session_number()
+    user = get_user_by_nr_session(nr_session)
 
-    return render_template('account.html', title=title, error=error)
+    return render_template('account.html', title=title, error=error, user=user)
 
 
 @account_.route('/change_image/', methods=["POST"])
@@ -55,4 +56,14 @@ def change_image():
 
     return redirect(url_for('account.account', error="Cos poszlo nie tak"))
 
+
+@account_.route('/change_job_position/', methods=["POST"])
+def change_job_position():
+    nr_session = get_session_number()
+
+    if request.method == "POST":
+        position_text = request.form.get('position_text')
+        change_position_user_by_nr_session(nr_session, position_text)
+
+        return redirect(url_for('account.account'))
 

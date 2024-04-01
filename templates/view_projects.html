@@ -36,14 +36,14 @@
         input[type="submit"] {
             padding: 5px 10px;
             border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #78cbc8;
+            color: #ffffff;
             border: none;
             cursor: pointer;
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #559d8a;
         }
     </style>
 {% endblock %}
@@ -61,4 +61,12 @@
         <input type="text" name="new_project_name" placeholder="Wpisz nazwę projektu">
         <input type="submit" value="Dodaj projekt">
     </form>
+    <br>
+    <ul>
+        {% for project in access_projects_list %}
+            <li>
+                <a href="/project/{{ project }}/" class="project-link">{{ project }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
