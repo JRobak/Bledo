@@ -16,8 +16,18 @@ def add_new_user(name):
     return user
 
 
-def get_user_by_name(name):
-    return User.query.filter_by(name=name).first()
+def get_user_data_in_json_by_name(name):
+    user = User.query.filter_by(name=name).first()
+    if user:
+        user_data = {
+            'id': user.id,
+            'name': user.name,
+            'position': user.position,
+            'description': user.description
+        }
+        return user_data
+    else:
+        return {}
 
 
 def get_user_by_nr_session(nr):
@@ -40,6 +50,12 @@ def change_description_user_by_nr_session(nr, description):
     user = User.query.filter_by(id=session.user_id).first()
     user.description = description
     db.session.commit()
+
+
+#search
+def get_search_results(search_query):
+    users = User.query.filter(User.name.ilike(f'%{search_query}%')).all()
+    return [{'id': user.id, 'name': user.name, 'img_path': user.img_path, 'position': user.position, 'description': user.description} for user in users]
 
 
 # projects

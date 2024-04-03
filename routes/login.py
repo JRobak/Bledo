@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, make_response
-from lib.query_models import check_exists_user, add_new_user, create_new_session, get_user_by_name, delete_session
+from lib.query_models import check_exists_user, add_new_user, create_new_session, get_user_data_in_json_by_name, delete_session
 
 login_ = Blueprint('login', __name__)
 
@@ -17,7 +17,7 @@ def login():
         if not username:
             return make_response(render_template('login.html', title=title, error="Field can't be empty"))
 
-        user = get_user_by_name(username)
+        user = get_user_data_in_json_by_name(username)
         if not user:
             user = add_new_user(username)
 

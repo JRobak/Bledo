@@ -1,7 +1,7 @@
-from flask import render_template, Blueprint, request, redirect, url_for
+from flask import render_template, Blueprint, request, redirect, url_for, jsonify
 import os
 from lib.query_models import change_image_user, get_user_by_nr_session, change_position_user_by_nr_session, \
-    change_description_user_by_nr_session
+    change_description_user_by_nr_session, get_user_data_in_json_by_name
 from lib.session import get_session_number
 
 account_ = Blueprint('account', __name__)
@@ -16,6 +16,15 @@ def account():
     user = get_user_by_nr_session(nr_session)
 
     return render_template('account.html', title=title, error=error, user=user)
+
+
+@account_.route('/get_user_info/<user_name>/')
+def get_user_info(user_name):
+    nr_session = get_session_number()
+
+    user_info_in_json = get_user_data_in_json_by_name(user_name)
+    print(user_info_in_json)
+    return jsonify(user_info_in_json)
 
 
 @account_.route('/change_image/', methods=["POST"])

@@ -136,11 +136,11 @@
 
               <div id="item-2-users-box">
                   {% for user in users %}
-                    <div class="user-take-part-in-box">
+                    <a href="#" class="user-link" data-user-name="{{ user[0] }}"><div class="user-take-part-in-box">
                         <img src="{{ url_for('static', filename='image/' + user[1] )}}">
                         <div class="user-take-part-in-name">{{ user[0] }}</div>
                         <div class="user-take-part-in-position">{{ user[2] }}</div>
-                    </div>
+                    </div></a>
                   {% endfor %}
                   {% if is_host %}
                       <br><form action="/add_new_user/" method="POST">
@@ -157,7 +157,9 @@
             </div>
 <!--          <div id="item-3" class="floating-box">3</div>-->
           <div id="item-4" class="floating-box">
+                <div id="user_info">
 
+                </div>
           </div>
           <div id="item-5" class="floating-box">5</div>
     </div>
@@ -166,20 +168,6 @@
 
 
 {% block js %}
-<script>
-    function addZero(num) {
-        return (num < 10 ? '0' : '') + num;
-    }
-
-    function updateDateTime() {
-        const now = new Date();
-        const formattedDate = `${addZero(now.getDate())}.${addZero(now.getMonth() + 1)}.${now.getFullYear()}`;
-        const formattedTime = `${addZero(now.getHours())}:${addZero(now.getMinutes())}`;
-        document.getElementById('contener-top-date').textContent = `${formattedDate}`;
-        document.getElementById('contener-top-time').textContent = `${formattedTime}`;
-    }
-
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-</script>
+    <script src="{{ url_for('static', filename='javascript/date_time.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/get_user_info.js') }}"></script>
 {% endblock %}

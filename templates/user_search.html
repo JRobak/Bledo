@@ -2,6 +2,11 @@
 
 {% block title %} Wyszukiwarka użytkowników {% endblock %}
 
+{% block js %}
+    <script src="{{ url_for('static', filename='javascript/search.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/get_user_info.js') }}"></script>
+{% endblock %}
+
 {% block css %}
 <style>
     #contener {
@@ -47,9 +52,19 @@
 {% block content %}
 
     <div id="contener">
-          <div id="item-0" class="floating-box">wyszukiwarka</div>
-          <div id="item-1" class="floating-box">wyniki</div>
-          <div id="item-2" class="floating-box">opis osoby kliknietej</div>
+          <div id="item-0" class="floating-box">
+              WYSZUKIWARKA
+              <input type="text" id="searchInput" placeholder="Search...">
+          </div>
+          <div id="item-1" class="floating-box">
+              WYNIKI
+              <ul id="searchResults"></ul>
+          </div>
+          <div id="item-2" class="floating-box">
+              <div id="user_info">
+
+              </div>
+          </div>
     </div>
 
 {% endblock %}
