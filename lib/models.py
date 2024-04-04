@@ -69,3 +69,6 @@ class Access_project(db.Model):
     def __repr__(self):
         return f"{self.id} {self.user_id} {self.project_id} {self.description}"
 
+
+def create_all():
+    db.Model.metadata.create_all(bind=db.engine, checkfirst=True)

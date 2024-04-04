@@ -1,5 +1,3 @@
-from .fixtures import *
-
 
 def test_user_login(app):
     response = app.get("/login/")
