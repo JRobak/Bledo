@@ -187,5 +187,6 @@ def extend_date_of_session(nr):
 
 def delete_session(nr):
     session = Session.query.filter_by(session_number=nr).first()
-    db.session.delete(session)
-    db.session.commit()
+    if session:
+        db.session.delete(session)
+        db.session.commit()

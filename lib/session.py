@@ -11,7 +11,7 @@ def get_session_number():
         else:
             delete_session(nr_session)
 
-    # abort(401)
+    abort(401)
     response = redirect(url_for('login.login'))
     response.delete_cookie('session')
     return response

@@ -4,9 +4,9 @@ from routes import account, login, projects, errors, tasks, user_search
 
 
 def create_app(db, migrate):
-    dir_db_path = os.environ['BLEDO_DATABASE_PATH']
-    db_path = os.path.join(dir_db_path, 'bledo_databases.db')
-    os.makedirs(dir_db_path, exist_ok=True)
+    db_path = os.environ['BLEDO_DATABASE_PATH']
+    # db_path = os.path.join(dir_db_path, 'bledo_databases.db')
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
     if not os.path.exists(db_path):
         with open(db_path, 'w') as f:
             f.close()

@@ -1,4 +1,4 @@
-from flask import g
+from flask import g, request
 from app import create_app
 from lib.__init__ import db, migrate
 from lib.session import get_session_number
@@ -8,6 +8,10 @@ app = create_app(db, migrate)
 
 @app.before_request
 def before_request():
+    if str(request.url).endswith("login/"):
+        return
+
+
     nr_session = get_session_number()
     if nr_session:
         from lib.query_models import get_user_by_nr_session
